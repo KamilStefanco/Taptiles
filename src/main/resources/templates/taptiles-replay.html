@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Taptiles</title>
+  <link rel="stylesheet" href="/css/stylesheet.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!-- Render mines field from web service responding with html  -->
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            refreshField();
+            setInterval(refreshField,2000);
+        });
+
+        function refreshField() {
+            $.ajax({
+                url: "/Taptiles/field-replay",
+            }).done(function (html) {
+                $("#fieldFromService").html(html);
+            });
+        }
+        //]]>
+    </script>
+
+</head>
+<body>
+
+  <div th:replace="fragments::header"/></div>
+
+
+  <div class="main">
+    <h1>You are watching replay of the last played game</h1><br>
+    <span th:if="${not @userController.logged}">
+      <h2>If you want your game to be available in replay, login.</h2><br>
+    </span>
+    <div id="fieldFromService"></div><br>
+    <a href="/Taptiles/new?level=1" class ="abutton">Go back</a>
+  </div>
+
+
+  <div th:replace="fragments::footer"/>
+
+
+</body>
+</html>

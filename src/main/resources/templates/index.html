@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GameStudio</title>
+    <link rel="stylesheet" href="/css/stylesheet-index.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+<div class="hlavicka">
+
+    <br><div class="logo">
+        <a href="/"> <img src="images/gamestudio.svg" alt="Gamestudio logo" width="50" height="70"> </a>
+        <h1>Welcome to GameStudio!</h1>
+    </div>
+
+
+    <hr><br>
+
+    <div class="login-box">
+        <span th:if="${@userController.logged} and ${ not @userController.register}">
+            <h2>You are logged in as: <span th:text="${@userController.loggedUser.username}"></span></h2></h2><br><br>
+            <form>
+            <a href="/logout">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>Logout</a>
+
+            </form>
+        </span>
+
+        <span th:if="not ${@userController.logged} and ${not @userController.register}">
+            <h2>Login or <a href="/reg" class="alreadyreg">Register</a> </h2>
+            <form method="post" action="/login">
+                <div class="user-box">
+                    <input type="text" name="username" required="">
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required="">
+                    <label>Password</label>
+                </div>
+                <a href="#" onclick="document.forms[0].submit();return false;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit
+                </a>
+            </form>
+        </span>
+
+
+        <span th:if="${@userController.register}">
+            <form method="post" action="/register">
+                <h3>Already registered? <a href="/" th:action="${@userController.setRegisterFalse}" class="alreadyreg">Login</a></h3><br><br>
+
+                <div class="user-box">
+                    <input type="text" name="username" required="">
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required="">
+                    <label>Password</label>
+                </div>
+                <a href="#" onclick="document.forms[0].submit();return false;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Register
+                </a>
+            </form>
+        </span>
+
+    </div>
+
+</div>
+
+<div class="hra">
+
+    <h2>Our games:</h2>
+    <button class="gamebutton">Taptiles</button>
+
+</div>
+</div>
+
+<script>
+      const button = document.querySelector('.gamebutton');
+      button.addEventListener('click', () => {
+        window.location.href = '/Taptiles';
+      });
+</script>
+
+<br>
+<div class="footer" th:replace="fragments::footer"/>
+</body>
+</html>
